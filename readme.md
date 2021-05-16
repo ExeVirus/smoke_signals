@@ -20,6 +20,6 @@ https://content.minetest.net/users/Just_Visiting/
 
 All code is LGPL 3.0
 
-All* textures are CC-by-SA 4.0 by Vanessa Dannenberg, found here: https://gitlab.com/VanessaE/homedecor_modpack/-/tree/master
+Most* textures are CC-by-SA 4.0 by Vanessa Dannenberg, found here: https://gitlab.com/VanessaE/homedecor_modpack/-/tree/master
 
 \* one texture, "smoke_fire_ploom_grey.png", and the images linked in this readme are CC-by-SA 4.0 by ExeVirus/Just_Visiting, this author.

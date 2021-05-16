@@ -1,5 +1,23 @@
 local S = minetest.get_translator("smoke_signals")
 
+local dye_colors = {
+	white		= "FFF",
+	grey		= "BBB",
+	dark_grey	= "777",
+	black		= "000",
+	violet		= "F0F",
+	blue		= "00F",
+	cyan		= "0FF",
+	dark_green	= "070",
+	green		= "0F0",
+	yellow		= "FF0",
+	brown		= "B84",
+	orange		= "F90",
+	red			= "F00",
+	magenta		= "C28",
+	pink		= "F88",
+}
+
 local function fire_particles_on(pos) -- 3 layers of fire
 	local meta = minetest.get_meta(pos)
 	local id1 = minetest.add_particlespawner({ -- 1 layer big particles fire
@@ -117,7 +135,8 @@ local function stop_smoke(pos)
 	this_spawner_meta:set_int("smoky", 0)
 end
 
-local function smoke_ploom(pos)
+local function smoke_ploom(pos, name)
+	local texture_name = "smoke_fire_ploom_grey.png^[colorize:#".. dye_colors[name]..":50"
 	minetest.add_particlespawner({ -- 1 layer big particles fire
 		amount = 25, time = 0.01, collisiondetection = false,
 		minpos = {x=pos.x-0.25, y=pos.y+0.3, z=pos.z-0.5},
@@ -126,7 +145,7 @@ local function smoke_ploom(pos)
 		minacc = {x=0,y=0,z=0}, maxacc = {x=0,y=0,z=0},
 		minexptime = 14, maxexptime = 16,
 		minsize = 1, maxsize = 2,
-		texture = "smoke_fire_ploom_grey.png",
+		texture = texture_name,
 	})
 	minetest.add_particlespawner({ -- 1 layer big particles fire
 		amount = 25, time = 0.01, collisiondetection = false,
@@ -136,7 +155,7 @@ local function smoke_ploom(pos)
 		minacc = {x=0,y=0,z=0}, maxacc = {x=0,y=0,z=0},
 		minexptime = 14, maxexptime = 16,
 		minsize = 1, maxsize = 2,
-		texture = "smoke_fire_ploom_grey.png",
+		texture = texture_name,
 	})
 	minetest.add_particlespawner({ -- 1 layer big particles fire
 		amount = 25, time = 0.01, collisiondetection = false,
@@ -146,7 +165,7 @@ local function smoke_ploom(pos)
 		minacc = {x=0,y=0,z=0}, maxacc = {x=0,y=0,z=0},
 		minexptime = 14, maxexptime = 16,
 		minsize = 1, maxsize = 2,
-		texture = "smoke_fire_ploom_grey.png",
+		texture = texture_name,
 	})
 	minetest.add_particlespawner({ -- 1 layer big particles fire
 		amount = 25, time = 0.01, collisiondetection = false,
@@ -156,7 +175,7 @@ local function smoke_ploom(pos)
 		minacc = {x=0,y=0,z=0}, maxacc = {x=0,y=0,z=0},
 		minexptime = 14, maxexptime = 16,
 		minsize = 1, maxsize = 2,
-		texture = "smoke_fire_ploom_grey.png",
+		texture = texture_name,
 	})
 	s_handle = minetest.sound_play("smoke_fire_smoke_ploom", {
 		pos = pos,
@@ -185,7 +204,7 @@ minetest.register_node("smoke_signals:smoke_fire", {
 	damage_per_second = 3,
 	selection_box = sbox,
 	tiles = {
-		"default_stone.png",
+		"default_cobble.png",
 		"default_junglewood.png",
 	},
 	on_construct = function(pos)
@@ -206,7 +225,7 @@ for i = 1, #dyes do
 			if(pointed_thing.under ~= nil) then
 				local node = minetest.get_node(pointed_thing.under)
 				if(node.name == "smoke_signals:smoke_fire") then
-					smoke_ploom(pointed_thing.under)
+					smoke_ploom(pointed_thing.under, name)
 					return itemstack
 				else
 					minetest.item_place(itemstack, placer, pointed_thing)
@@ -222,9 +241,12 @@ end
 -- CRAFTS
 
 minetest.register_craft({
-	type = "shapeless",
 	output = 'smoke_signals:smoke_fire',
-	recipe = {"default:torch", "default:stick", "default:torch" }
+	recipe = {
+		{"", "default:torch", ""},
+		{"default:stick", "default:torch", "default:stick"},
+		{"default:cobble", "default:stick", "default:cobble"},
+	}
 })
 
 -- OTHER

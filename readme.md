@@ -11,6 +11,8 @@ Once placed, simply hit the fire with any color wool and... *poof*, a burst of s
 
 Why wool? Well, original smoke signals were done with a blanket covering the fire...
 
+### Note: Each wool makes different colored smoke
+
 Enjoy!
 
 And be sure to check out my other work for minetest: 
